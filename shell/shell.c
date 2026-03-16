@@ -1,5 +1,5 @@
 #include "shell.h"
-#include "../drivers/keyboard.h" # dw about this, in makefile we fix this
+#include "../drivers/keyboard.h" // In Makefile we link this better
 
 #define MAX_LINE 128
 
