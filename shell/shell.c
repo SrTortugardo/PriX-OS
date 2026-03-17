@@ -8,32 +8,6 @@
 extern void putchar_col(char c, unsigned char color);
 extern void clear_screen();
 
-
-static int
-strcmp(const char *a, const char *b) // having a libc would be better than declare this here, on shell.c
-{
-    while (*a && *b)
-    {
-        if (*a != *b)
-        {
-            return 1;
-        }
-
-        a++;
-        b++;
-    }
-    return (*a != *b);
-}
-
-static int strncmp(const char *a, const char *b, int n)
-{
-    for (int i = 0; i < n; i++) {
-        if (a[i] != b[i]) return 1;
-        if (a[i] == 0 || b[i] == 0) break;
-    }
-    return 0;
-}
-
 static void
 readline(char *buffer)
 {
