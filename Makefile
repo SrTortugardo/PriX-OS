@@ -7,7 +7,7 @@ LDFLAGS = -m elf_i386 -T link.ld
 
 KERNEL = Prix/boot/kernel.bin
 
-C_SOURCES = kernel.c drivers/keyboard.c shell/shell.c fs/fs.c
+C_SOURCES = kernel.c libc/libc.c drivers/keyboard.c shell/shell.c fs/fs.c
 C_OBJECTS = $(C_SOURCES:.c=.o)
 
 ASM_OBJECT = kasm.o
