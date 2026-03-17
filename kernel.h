@@ -3,9 +3,11 @@
 
 #include <stdint.h>
 
-// funciones para escribir en pantalla
-void putchar_col(char c, uint8_t color);
-void clear_screen();
-void print(const char *str); // opcional, si quieres un print rápido
+typedef unsigned char u8;
+typedef unsigned int  u32;
+
+extern u32 cursor;
+
+// This file is used by libc, instead of having print and clear inside kernel
 
 #endif // KERNEL_H
