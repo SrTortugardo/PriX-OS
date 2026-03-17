@@ -1,6 +1,6 @@
 #include "shell.h"
 #include "../drivers/keyboard.h" // In Makefile we link this better
-#include "../kernel.h"
+#include "../libc/libc.h"
 #include "../fs/fs.h"
 #include <stdint.h>
 #define MAX_LINE 128
@@ -49,12 +49,10 @@ readline(char *buffer)
             return ;
         }
 
-        if (c == '\b')
+        if (c == '\b' && i > 0)
         {
-            if (i > 0)
-            {
-                i--;
-            }
+            i--;
+            backspace();
             continue;
         }
 
