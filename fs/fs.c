@@ -1,5 +1,5 @@
 #include "fs.h"
-#include "../kernel.h"
+#include "../libc/libc.h"
 
 static File fs[MAX_FILES];
 static int file_count = 0;
@@ -19,12 +19,16 @@ strcmp_fs(const char* a, const char* b)
     return (*a != *b);
 }
 
-static void print_fs(const char* str) {
+static void
+print_fs(const char* str)
+{
     for (int i = 0; str[i]; i++)
         putchar_col(str[i], 0x07);
 }
 
-void fs_init() {
+void 
+fs_init()
+{
     for (int i = 0; i < MAX_FILES; i++) {
         fs[i].name[0] = 0;
         fs[i].size = 0;
@@ -32,33 +36,33 @@ void fs_init() {
     file_count = 0;
 }
 
-
 int
 fs_create(const char* name, const uint8_t *data, uint32_t size)
 {
     if (file_count >= MAX_FILES || size > BLOCK_SIZE)
     {
-        return -1; // Theres no space on disk
+        return -1;
     }
+
     for (int i = 0; i < MAX_FILES; i++)
     {
-        int j;
-        for (j = 0; j < MAX_FILE_NAME-1 && name[j]; j++)
+        if (fs[i].name[0] == 0) // slot libre
         {
-            fs[i].name[j] = name[j];
-        }
-        fs[i].name[j] = 0;
+            int j;
+            for (j = 0; j < MAX_FILE_NAME-1 && name[j]; j++)
+                fs[i].name[j] = name[j];
+            fs[i].name[j] = 0;
 
-        for (j = 0; j < size; j++)
-        {
-            fs[i].data[j] = data[j];
-        }
-        fs[i].size = size;
+            for (j = 0; j < size; j++)
+                fs[i].data[j] = data[j];
+            fs[i].size = size;
 
-        file_count++;
-        return 0;
+            file_count++;
+            return 0;
+        }
     }
-    return -1; // theres no free slot
+
+    return -1; // theres no space
 }
 
 File*
