@@ -3,13 +3,15 @@
  */
 #include "drivers/keyboard.h"
 #include "shell/shell.h"
+#include "fs/fs.h"
 
 typedef unsigned char  u8;
 typedef unsigned int   u32;
 
 static u32 cursor = 0;
 
-void putchar_col(char c, u8 color) {
+void
+putchar_col(char c, u8 color) {
     volatile u8 *video = (volatile u8*)0xB8000;
 
     if (c == '\n')
@@ -21,7 +23,8 @@ void putchar_col(char c, u8 color) {
     video[cursor++] = color;
 }
 
-void clear_screen()
+void
+clear_screen()
 {
     volatile unsigned char *video = (volatile unsigned char*)0xB8000;
 
@@ -34,7 +37,17 @@ void clear_screen()
     cursor = 0;
 }
 
+void
+print(const char *str)
+{
+    for (int i = 0; str[i]; i++)
+    {
+        putchar_col(str[i], 0x07);
+    }
+}
+
 void kmain(void) {
+    putchar_col('\n', 0x01);
     putchar_col('P', 0x04);  /* red */
     putchar_col('R', 0x07);  /* light gray */
     putchar_col('I', 0x02);  /* green */
@@ -43,11 +56,9 @@ void kmain(void) {
     putchar_col('O', 0x02);
     putchar_col('S', 0x02);
     
-    //while (1)
-    //{
-    //    char c = keyboard_getchar();
-    //    putchar_col(c, 0x07);
-    //}
 
+    print("\nStarting the filesystem\n");
+    fs_init();
+    print("Starting the shell...\n");
     shell_run();
 }
