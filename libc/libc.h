@@ -5,10 +5,16 @@
 
 #include <stdint.h>
 
+#define SCREEN_WIDTH 80
+#define SCREEN_HEIGHT 25
+#define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT * 2)
 
 void putchar_col(char c, u8 color);
 void clear_screen();
 void print(const char *str);
 void backspace();
+int strcmp(const char *a, const char *b);
+int strncmp(const char *a, const char *b, int n);
+
 
 #endif
