@@ -15,6 +15,12 @@ putchar_col(char c, u8 color)
     }
     video[cursor++] = (u8)c;
     video[cursor++] = color;
+
+    if (cursor >= SCREEN_SIZE) // ik it works BAD, but its temporal
+    {
+        clear_screen();
+        cursor = 0;
+    }
 }
 
 void
@@ -50,4 +56,29 @@ backspace()
         video[cursor] = ' ';
         video[cursor+1] = 0x07;
     }
+}
+
+int
+strcmp(const char *a, const char *b) // now there is libc
+{
+    while (*a && *b)
+    {
+        if (*a != *b)
+        {
+            return 1;
+        }
+
+        a++;
+        b++;
+    }
+    return (*a != *b);
+}
+
+int strncmp(const char *a, const char *b, int n)
+{
+    for (int i = 0; i < n; i++) {
+        if (a[i] != b[i]) return 1;
+        if (a[i] == 0 || b[i] == 0) break;
+    }
+    return 0;
 }
