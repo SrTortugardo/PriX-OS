@@ -11,16 +11,13 @@ putchar_col(char c, u8 color)
     if (c == '\n')
     {
         cursor += (160 - (cursor % 160));
+        check_scroll();
         return;
     }
     video[cursor++] = (u8)c;
     video[cursor++] = color;
 
-    if (cursor >= SCREEN_SIZE) // ik it works BAD, but its temporal
-    {
-        clear_screen();
-        cursor = 0;
-    }
+    check_scroll();
 }
 
 void
@@ -81,4 +78,32 @@ int strncmp(const char *a, const char *b, int n)
         if (a[i] == 0 || b[i] == 0) break;
     }
     return 0;
+}
+
+void
+scroll()
+{
+    volatile u8* video = (volatile u8*)0xB8000;
+
+    for (int i = 0; i < (SCREEN_HEIGHT - 1) * 160; i++)
+    {
+        video[i] = video[i + 160];
+    }
+
+    for (int i = (SCREEN_HEIGHT - 1) * 160; i < SCREEN_HEIGHT * 160; i += 2)
+    {
+        video[i] = ' ';
+        video[i + 1] = 0x07;
+    }
+
+    cursor -= 160;
+}
+
+void
+check_scroll()
+{
+    if (cursor >= SCREEN_SIZE)
+    {
+        scroll();
+    }
 }
