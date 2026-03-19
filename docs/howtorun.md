@@ -20,3 +20,8 @@ just type ```make``` and press enter, yes, thats all!
 type ```make run``` and on another terminal ``vncviewer localhost:5900`` (make sure you have a Xorg/Wayland Window Manager/Desktop Enviroment
 
 ## and thats all!
+
+
+## Contributing for this
+If you use any distro you can add a guide of how to install dependencies
+If you are on MacOS or Windows you can add a guide of how to compile and run on those os
