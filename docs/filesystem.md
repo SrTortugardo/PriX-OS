@@ -7,9 +7,9 @@ every file has :
 - SIZE -> size of the file
 
 ## Functions
-strcmp_fs = compraes to texts character by character, 0 if the same 1 if not
-print_fs = prints using putchar | basically the same as libc
-fs_create = first checks if is space on disks, searches the free slots and writes the name data and size. also does file_count++
+- strcmp_fs = compares to texts character by character, 0 if the same 1 if not
+- print_fs = prints using putchar | basically the same as libc
+- fs_create = first checks if is space on disks, searches the free slots and writes the name data and size. also does file_count++
 
 ## Init
 ```
